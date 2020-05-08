@@ -1,0 +1,48 @@
+<?php
+
+function getTabTable($mysqli, $tab, $spawn_timeout, $spawn_timeout_time)
+{
+	
+echo '<table class="table table-bordered table-dark text-left">';
+echo '<thead>';
+echo '<tr>';
+echo '<th scope="col">Effekt</th>';
+echo '<th scope="col">Cooldown</th>';
+echo '<th scope="col">Spawn</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
+
+
+$request = $mysqli->query("SELECT * FROM statuseffects WHERE tab='" . $tab . "' ORDER BY orderid ASC");	
+while($res = $request->fetch_assoc())
+{
+
+echo '<tr>';
+echo '	<th scope="row">' . $res['name'] . '</th>';
+echo '	<td>' . $res['price'] . 's</td>';
+echo '	<td><a href="?eid=' . $res['id'] . '&tab=' . $res['tab'] . '" class="btn btn-primary js-spawnbutton';
+
+if ($spawn_timeout) { 
+	echo " disabled"; 
+}
+
+echo '" role="button">';
+if ($spawn_timeout) { 
+	echo "Cooldown <span class='js-countdown'>" . $spawn_timeout_time . "</span>s"; 
+} else { 
+	echo "Spawn";
+}
+echo '</a></td>';
+echo '</tr>';
+
+}
+	
+echo '</tbody>';
+echo '</table>';
+
+}
+
+	
+	
+?>
