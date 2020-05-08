@@ -1,8 +1,19 @@
+<?php if ($_SITE_INCLUDED !== true) exit(); ?>
+
 <div class="container-fluid">
 <div class="row justify-content-center">
 <div class="col-lg-6">
 <h2 class="text-center">Ruiniere das Spiel!</h2>
 
+<?php if (!$site_authenticated) { ?>
+<p class="text-center">
+	<a href="<?php echo $oauth->getAuthUrl($twitch_redirect_url, array('response_type'=>'code')); ?>">Login über Twitch</a>
+</p>
+<?php } else { ?>
+<p class="text-center">
+	Hallo <?php echo htmlspecialchars($oauth->getUsername()); ?> - <a href="?logout">Ausloggen</a>
+</p>
+<?php } ?>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">

@@ -1,11 +1,16 @@
 <?php
 session_start();
 
+$_SITE_INCLUDED = true;
+
 require_once "config.inc.php";
 require_once "function.inc.php";
+require_once 'oauth.inc.php';
 require_once "rcon.php";
 use Thedudeguy\Rcon;
 
+$mysqli = new mysqli($mysql_host, $mysql_user, $mysql_pw, $mysql_db);
+$oauth = new oauth("twitch", $twitch_base_url, $twitch_client_id, $twitch_client_secret);
 
 //session timeout
 if (!array_key_exists('sess_timeout', $_SESSION))
@@ -20,6 +25,7 @@ if ($_SESSION['sess_timeout'] > time())
 	$spawn_timeout = true;
 	$spawn_timeout_time = $_SESSION['sess_timeout'] - time();
 }
+
 
 //tab control
 $active_tab = 0;
@@ -36,43 +42,9 @@ if (array_key_exists('tab', $_GET))
 	}
 }
 
-//spawn
-if (array_key_exists('eid', $_GET) && $site_enabled && !$spawn_timeout)
-{
-	if(is_numeric($_GET['eid']))
-	{
-		$eid = $_GET['eid'];
-		$pre = $mysqli->prepare("SELECT * FROM statuseffects WHERE id=?");
-		$pre->bind_param("i", $eid);
-		$pre->execute();
-		$result = $pre->get_result();
-		
-		
-		if($result->num_rows === 1)
-		{
-			$row = $result->fetch_assoc();
-			
-			$_SESSION['sess_timeout'] = time() + $row['price'];
-			$rcon = new Rcon($mc_host, $mc_port, $mc_password, $mc_timeout);
-			
-			if ($rcon->connect())
-			{
-				$cmd = explode(PHP_EOL, $row['cmd']);
-				$cmd = str_replace("<viewer>", "Ein Zuschauer", $cmd);
-				$cmd = str_replace("<target>", "@p", $cmd);
-				
-				foreach($cmd as $c)
-				{
-					$rcon->sendCommand($c);
-				}
-			}
-			
-		}
-		
-		$pre->close();
-		header('location: /?tab=' . $active_tab);
-	}	
-}
+require_once 'login.inc.php';
+require_once 'spawn.inc.php';
+
 ?>
 
 <!DOCTYPE html>
