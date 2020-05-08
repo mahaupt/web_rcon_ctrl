@@ -11,6 +11,7 @@ use Thedudeguy\Rcon;
 
 $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_pw, $mysql_db);
 $oauth = new oauth("twitch", $twitch_base_url, $twitch_client_id, $twitch_client_secret);
+$rcon = new Rcon($mc_host, $mc_port, $mc_password, $mc_timeout);
 
 //session timeout
 if (!array_key_exists('sess_timeout', $_SESSION))
@@ -63,6 +64,54 @@ body {
 h2 {
 	margin-bottom: 15px;
 }
+/**
+ * Special thanks to: http://blog.koalite.com/bbg/
+ */
+.btn-twitch { 
+  color: #FFFFFF; 
+  background-color: #6441A5; 
+  border-color: #2F1F4E; 
+} 
+ 
+.btn-twitch:hover, 
+.btn-twitch:focus, 
+.btn-twitch:active, 
+.btn-twitch.active, 
+.open .dropdown-toggle.btn-twitch { 
+  color: #FFFFFF; 
+  background-color: #472e75; 
+  border-color: #2F1F4E; 
+} 
+ 
+.btn-twitch:active, 
+.btn-twitch.active, 
+.open .dropdown-toggle.btn-twitch { 
+  background-image: none; 
+} 
+ 
+.btn-twitch.disabled, 
+.btn-twitch[disabled], 
+fieldset[disabled] .btn-twitch, 
+.btn-twitch.disabled:hover, 
+.btn-twitch[disabled]:hover, 
+fieldset[disabled] .btn-twitch:hover, 
+.btn-twitch.disabled:focus, 
+.btn-twitch[disabled]:focus, 
+fieldset[disabled] .btn-twitch:focus, 
+.btn-twitch.disabled:active, 
+.btn-twitch[disabled]:active, 
+fieldset[disabled] .btn-twitch:active, 
+.btn-twitch.disabled.active, 
+.btn-twitch[disabled].active, 
+fieldset[disabled] .btn-twitch.active { 
+  background-color: #6441A5; 
+  border-color: #2F1F4E; 
+} 
+ 
+.btn-twitch .badge { 
+  color: #6441A5; 
+  background-color: #FFFFFF; 
+}
 </style>
 <script>
 window.setInterval(function(){
@@ -75,6 +124,8 @@ $('.js-countdown').each(function () {
 		clearInterval();
 		$('.js-spawnbutton').each(function () {
 			$(this).html("Spawn");
+			$(this).removeClass("btn-secondary");
+			$(this).addClass("btn-primary");
 			$(this).removeClass("disabled");
 		});
 	}
@@ -83,20 +134,14 @@ $('.js-countdown').each(function () {
 });
 }, 1000);
 </script>
+<script src="https://kit.fontawesome.com/259161033a.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<?php if ($site_enabled) {
-	  
-	include "table.inc.php";
-	
-} 
-else 
-{
-	include "inactive.inc.php";
-} 
-
+<?php   
+include "table.inc.php";
 ?>
+
 <!-- Scripts am Ende //-->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

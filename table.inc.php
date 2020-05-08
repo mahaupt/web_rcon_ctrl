@@ -7,13 +7,25 @@
 
 <?php if (!$site_authenticated) { ?>
 <p class="text-center">
-	<a href="<?php echo $oauth->getAuthUrl($twitch_redirect_url, array('response_type'=>'code')); ?>">Login über Twitch</a>
+	Bitte logge dich über deinen Twitch-Account ein, um Objekte zu spawnen!<br>
+	<a href="<?php echo $oauth->getAuthUrl($twitch_redirect_url, array('response_type'=>'code')); ?>" class="btn btn-twitch">
+		<i class="fa fa-1x fa-twitch"></i> Login via Twitch
+	</a>
 </p>
 <?php } else { ?>
 <p class="text-center">
 	Hallo <?php echo htmlspecialchars($oauth->getUsername()); ?> - <a href="?logout">Ausloggen</a>
 </p>
+<?php } 
+	
+if (!$site_enabled)
+{?>
+<p class="text-center">
+	Diese Seite ist momentan deaktiviert!
+</p>
 <?php } ?>
+
+
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -28,9 +40,9 @@
 </ul>
 
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade<?php if ($active_tab == 0) { echo " show active"; } ?>" id="mobs" role="tabpanel" aria-labelledby="mobs-tab"><?php getTabTable($mysqli, 0, $spawn_timeout, $spawn_timeout_time); ?></div>
-  <div class="tab-pane fade<?php if ($active_tab == 1) { echo " show active"; } ?>" id="items" role="tabpanel" aria-labelledby="items-tab"><?php getTabTable($mysqli, 1, $spawn_timeout, $spawn_timeout_time); ?></div>
-  <div class="tab-pane fade<?php if ($active_tab == 2) { echo " show active"; } ?>" id="effects" role="tabpanel" aria-labelledby="effects-tab"><?php getTabTable($mysqli, 2, $spawn_timeout, $spawn_timeout_time); ?></div>
+  <div class="tab-pane fade<?php if ($active_tab == 0) { echo " show active"; } ?>" id="mobs" role="tabpanel" aria-labelledby="mobs-tab"><?php getTabTable($mysqli, 0, $spawn_timeout, $spawn_timeout_time, $site_authenticated, !$site_enabled); ?></div>
+  <div class="tab-pane fade<?php if ($active_tab == 1) { echo " show active"; } ?>" id="items" role="tabpanel" aria-labelledby="items-tab"><?php getTabTable($mysqli, 1, $spawn_timeout, $spawn_timeout_time, $site_authenticated, !$site_enabled); ?></div>
+  <div class="tab-pane fade<?php if ($active_tab == 2) { echo " show active"; } ?>" id="effects" role="tabpanel" aria-labelledby="effects-tab"><?php getTabTable($mysqli, 2, $spawn_timeout, $spawn_timeout_time, $site_authenticated, !$site_enabled); ?></div>
 </div>
 
 

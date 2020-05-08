@@ -19,7 +19,6 @@ if (array_key_exists('eid', $_GET) && $site_enabled && !$spawn_timeout && $site_
 			$row = $result->fetch_assoc();
 			
 			$_SESSION['sess_timeout'] = time() + $row['price'];
-			$rcon = new Rcon($mc_host, $mc_port, $mc_password, $mc_timeout);
 			
 			if ($rcon->connect())
 			{

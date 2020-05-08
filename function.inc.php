@@ -2,7 +2,7 @@
 	
 if ($_SITE_INCLUDED !== true) exit();
 
-function getTabTable($mysqli, $tab, $spawn_timeout, $spawn_timeout_time)
+function getTabTable($mysqli, $tab, $spawn_timeout, $spawn_timeout_time, $authenticated, $site_disabled)
 {
 	
 echo '<table class="table table-bordered table-dark text-left">';
@@ -23,10 +23,12 @@ while($res = $request->fetch_assoc())
 echo '<tr>';
 echo '	<th scope="row">' . $res['name'] . '</th>';
 echo '	<td>' . $res['price'] . 's</td>';
-echo '	<td><a href="?eid=' . $res['id'] . '&tab=' . $res['tab'] . '" class="btn btn-primary js-spawnbutton';
+echo '	<td><a href="?eid=' . $res['id'] . '&tab=' . $res['tab'] . '" class="btn js-spawnbutton';
 
-if ($spawn_timeout) { 
-	echo " disabled"; 
+if ($spawn_timeout || !$authenticated || $site_disabled) { 
+	echo " btn-secondary disabled"; 
+} else {
+	echo " btn-primary";
 }
 
 echo '" role="button">';
