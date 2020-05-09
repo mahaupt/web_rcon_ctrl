@@ -3,9 +3,9 @@
 <div class="container-fluid">
 <div class="row justify-content-center">
 <div class="col-lg-6">
-<h2 class="text-center">Ruiniere das Spiel!</h2>
+<h2 class="text-center">Manipuliere das Spiel!</h2>
 
-<?php if (!$site_authenticated) { ?>
+<?php /*if (!$site_authenticated) { ?>
 <p class="text-center">
 	Bitte logge dich über deinen Twitch-Account ein, um Objekte zu spawnen!<br>
 	<a href="<?php echo $oauth->getAuthUrl($twitch_redirect_url, array('response_type'=>'code')); ?>" class="btn btn-twitch">
@@ -16,7 +16,7 @@
 <p class="text-center">
 	Hallo <?php echo htmlspecialchars($oauth->getUsername()); ?> - <a href="?logout">Ausloggen</a>
 </p>
-<?php } 
+<?php } */
 	
 if (!$site_enabled)
 {?>

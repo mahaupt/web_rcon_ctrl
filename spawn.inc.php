@@ -23,13 +23,14 @@ if (array_key_exists('eid', $_GET) && $site_enabled && !$spawn_timeout && $site_
 			if ($rcon->connect())
 			{
 				$cmd = explode(PHP_EOL, $row['cmd']);
-				$cmd = str_replace("<viewer>", $oauth->getUsername(), $cmd);
+				$cmd = str_replace("<viewer>", "Ein Zuschauer", $cmd); //$oauth->getUsername()
 				$cmd = str_replace("<target>", "@p", $cmd);
 				
 				foreach($cmd as $c)
 				{
 					$rcon->sendCommand($c);
 				}
+				$rcon->disconnect();
 			}
 			
 		}

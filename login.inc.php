@@ -2,9 +2,9 @@
 	
 if ($_SITE_INCLUDED !== true) exit();
 
-$site_authenticated = false;
+$site_authenticated = true;
 
-if (array_key_exists('code', $_GET))
+/*if (array_key_exists('code', $_GET))
 {
 	$acode = $_GET['code'];
 	
@@ -22,6 +22,6 @@ if (array_key_exists('logout', $_GET) && $site_authenticated)
 {
 	$oauth->logout();
 	header('location: /');
-}
+}*/
 
 ?>
