@@ -12,6 +12,7 @@ use Thedudeguy\Rcon;
 $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_pw, $mysql_db);
 $oauth = new oauth("twitch", $twitch_base_url, $twitch_client_id, $twitch_client_secret);
 $rcon = new Rcon($mc_host, $mc_port, $mc_password, $mc_timeout);
+$display_error = false;
 
 //session timeout
 if (!array_key_exists('sess_timeout', $_SESSION))
@@ -19,6 +20,7 @@ if (!array_key_exists('sess_timeout', $_SESSION))
 	$_SESSION['sess_timeout'] = 0;
 }
 
+//timeout check
 $spawn_timeout = false;
 $spawn_timeout_time = 0;
 if ($_SESSION['sess_timeout'] > time())
@@ -141,6 +143,13 @@ $('.js-countdown').each(function () {
 <?php   
 include "table.inc.php";
 ?>
+
+
+<?php
+if ($display_error)
+{?>
+<script>alert('<?php echo $display_error; ?>');</script>
+<?php } ?>
 
 <!-- Scripts am Ende //-->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
